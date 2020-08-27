@@ -1,12 +1,20 @@
 @extends('layouts.app')
 
+
+
+
 @section('content')
 <a href="/recipes" class="btn btn-primary">Back</a>
 <hr>
 <h2>{{$recipe->title}}</h2>
-<p>{{$recipe->instructions}}</p>
-<hr>
 <small>Written on {{$recipe->created_at}}</small>
+<hr>
+<div class="row">
+  <div class="col-md-12">
+    <img style="width: 100%" src="/storage/cover_images/{{$recipe->cover_image}}" alt="">
+  </div>
+</div>
+<p>{{$recipe->instructions}}</p>
 <hr>
 @if (!Auth::guest())
   @if (Auth::id() == $recipe->user_id)

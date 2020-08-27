@@ -2,7 +2,7 @@
 
 @section('content')
 <h2>Edit: {{$recipe->title}}</h2>
-{!! Form::open(['action' => ['RecipeController@update', $recipe->id], 'method' => 'PUT']) !!}
+{!! Form::open(['action' => ['RecipeController@update', $recipe->id], 'method' => 'PUT', 'files' => true]) !!}
 <div class="form-group">
   {{Form::label('title', 'Title')}}
   {{Form::text('title', $recipe->title, ['class' => 'form-control', 'placeholder' => 'Title'])}}
@@ -10,6 +10,9 @@
 <div class="form-group">
   {{Form::label('instructions', 'Instructions')}}
   {{Form::textarea('instructions', $recipe->instructions, ['class' => 'form-control', 'placeholder' => 'Instructions'])}}
+</div>
+<div class="form-group">
+  {{Form::file('cover_image')}}
 </div>
 {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
 {!! Form::close() !!}
