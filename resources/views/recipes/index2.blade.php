@@ -94,7 +94,7 @@
 </style>
 @endsection
 
-<!-- 888 -->
+
 
 @section('content')
 <h2>Recipes</h2>
@@ -134,6 +134,7 @@
           </details>
         </h4>
       </div>
+
     </div>
 
     @endforeach

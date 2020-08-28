@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('head')
-
 <style>
   .switch {
     position: relative;
@@ -77,24 +76,13 @@
     height: 15%;
   }
 
-  /* Summary */
-  body {
-    display: flex;
-    flex-direction: row-reverse;
-  }
-
-  #log {
-    flex-shrink: 0;
-    padding-left: 3em;
-  }
-
-  #summaries {
-    flex-grow: 1;
+  h2 {
+    background-color: purple;
   }
 </style>
 @endsection
 
-<!-- 888 -->
+
 
 @section('content')
 <h2>Recipes</h2>
@@ -103,12 +91,10 @@
 <h5>Order By:</h5>
 <div id="b">
   <p>Title</p>
-  <button class="btn btn-primary" onclick="proba()">ClickMe</button>
-
-  {{-- <label class="switch">
-    <input id="checkbox_title" onclick="changeOrder(this)" type="checkbox" name="sort_order">
+  <label class="switch">
+    <input id="checkbox_title" type="checkbox" name="sort_order">
     <span class="slider round"></span>
-  </label> --}}
+  </label>
 </div>
 <br>
 <hr style="margin-top: 0;">
@@ -126,13 +112,7 @@
         <img style="width: 100%" src="/storage/cover_images/{{$recipe->cover_image}}" alt="">
       </div>
       <div class="col-md-8">
-        <h4><a href="/recipes/{{$recipe->id}}">{{$recipe->title}}</a>
-          <details class="col-md-7">
-            <summary>Instructions</summary><small>
-              {{$recipe->instructions}}
-            </small>
-          </details>
-        </h4>
+        <h4><a href="/recipes/{{$recipe->id}}">{{$recipe->title}}</a></h4>
       </div>
     </div>
 
@@ -146,8 +126,17 @@
 
 @section('script')
 <script>
-  function proba() {
-    window.location.replace("http://recipeworld.erik/recipes?sortOrder=title_desc");
-  }
+  $('input[name=sort_order]').click(function() {
+    if ($(this).is(':checked')) {
+      $.get("/sort?=asc", function() {
+        //makes titles sort by descending order
+        $.get("http://recipeworld.erik/recipes?sortOrder=title_desc");
+        console.log("checked-get");
+      });
+    } else {
+      console.log("else")
+    }
+  })
 </script>
+
 @endsection

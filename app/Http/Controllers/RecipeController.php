@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Route;
 use App\Recipe;
 use DB;
 
 class RecipeController extends Controller
 {
+
 
   public function __construct()
   {
@@ -20,12 +22,21 @@ class RecipeController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
+
   public function index()
   {
-    $recipes = Recipe::all();
-    $recipes2 = Recipe::orderBy('title', 'desc')->get();
-    $recipes3 = DB::select('SELECT * FROM recipes ORDER BY title DESC');
-    return view('recipes.index')->with('recipes', $recipes3);
+    $order = array('asc', 'desc');
+    $orderDesc = 'desc';
+    //$recipes = Recipe::all();
+    $recipes = Recipe::orderBy('title', 'asc')->get();
+    //$recipes3 = DB::select('SELECT * FROM recipes ORDER BY title DESC');
+    return view('recipes.index')->with('recipes', $recipes);
+  }
+
+  public function desc()
+  {
+    $recipes = Recipe::orderBy('title', 'desc')->get();
+    return view('recipes.index')->with('recipes', $recipes);
   }
 
   /**

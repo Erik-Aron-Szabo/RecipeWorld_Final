@@ -77,24 +77,13 @@
     height: 15%;
   }
 
-  /* Summary */
-  body {
-    display: flex;
-    flex-direction: row-reverse;
-  }
-
-  #log {
-    flex-shrink: 0;
-    padding-left: 3em;
-  }
-
-  #summaries {
-    flex-grow: 1;
+  h2 {
+    background-color: purple;
   }
 </style>
 @endsection
 
-<!-- 888 -->
+
 
 @section('content')
 <h2>Recipes</h2>
@@ -103,7 +92,7 @@
 <h5>Order By:</h5>
 <div id="b">
   <p>Title</p>
-  <button class="btn btn-primary" onclick="proba()">ClickMe</button>
+  <button class="btn btn-primary" onclick="proba(this)">ClickMe</button>
 
   {{-- <label class="switch">
     <input id="checkbox_title" onclick="changeOrder(this)" type="checkbox" name="sort_order">
@@ -126,13 +115,7 @@
         <img style="width: 100%" src="/storage/cover_images/{{$recipe->cover_image}}" alt="">
       </div>
       <div class="col-md-8">
-        <h4><a href="/recipes/{{$recipe->id}}">{{$recipe->title}}</a>
-          <details class="col-md-7">
-            <summary>Instructions</summary><small>
-              {{$recipe->instructions}}
-            </small>
-          </details>
-        </h4>
+        <h4><a href="/recipes/{{$recipe->id}}">{{$recipe->title}}</a></h4>
       </div>
     </div>
 
@@ -145,9 +128,36 @@
 @endsection
 
 @section('script')
+<?php
+
+use App\Recipe;
+use Illuminate\Support\Facades\Route;
+?>
 <script>
   function proba() {
-    window.location.replace("http://recipeworld.erik/recipes?sortOrder=title_desc");
+    <?php
+    function a1()
+    {
+      echo "<p>Hi</p>";
+    }
+    a1();
+    ?>
+    window.location.href = "http://recipeworld.erik/recipes?sortOrder=title_asc";
+    console.log("pr");
+  }
+
+  function changeOrder(checkbox) {
+    if (checkbox.checked) {
+      console.log("1")
+      <?php
+      Route::get('/recipes?sortOrder=title_desc', 'RecipeController@orderTitleDesc');
+      ?>
+    } else {
+      console.log("2")
+      <?php
+      Route::get('/recipes?sortOrder=title_asc', 'RecipeController@index');
+      ?>
+    }
   }
 </script>
 @endsection
