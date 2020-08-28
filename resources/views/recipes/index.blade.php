@@ -103,12 +103,10 @@
 <h5>Order By:</h5>
 <div id="b">
   <p>Title</p>
-  <button class="btn btn-primary" onclick="proba()">ClickMe</button>
-
-  {{-- <label class="switch">
-    <input id="checkbox_title" onclick="changeOrder(this)" type="checkbox" name="sort_order">
+  <label class="switch">
+    <input id="checkbox_title" type="checkbox" name="sort_order">
     <span class="slider round"></span>
-  </label> --}}
+  </label>
 </div>
 <br>
 <hr style="margin-top: 0;">
