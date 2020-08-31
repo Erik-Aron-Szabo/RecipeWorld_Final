@@ -101,11 +101,11 @@
 <small>Here you can find the recipies to make.</small>
 <hr>
 <h5>Order By:</h5>
-{!! Form::open(['action' => 'OrderController@descending', 'method' => 'post', 'id' => 'order_form' ]) !!}
+{!! Form::open(['action' => 'OrderController@ascending', 'method' => 'post', 'id' => 'order_form' ]) !!}
 <div id="b">
   <p>Title</p>
   <label class="switch">
-    {{Form::checkbox('sort_order', 'desc', true)}}
+    {{Form::checkbox('sort_order', 'asc', false)}}
     <!-- <input id="checkbox_title" type="checkbox" value="asc" name="sort_order" false> -->
     <span class="slider round"></span>
   </label>

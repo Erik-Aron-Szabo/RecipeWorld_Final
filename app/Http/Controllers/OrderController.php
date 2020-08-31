@@ -25,15 +25,15 @@ class OrderController extends Controller
   }
 
 
-  public function index()
+  public function descending(Request $request)
   {
     $recipes = Recipe::orderBy('title', 'desc')->get();
-    return view('recipes.index2')->with('recipes', $recipes);
+    return view('recipes.index_desc')->with('recipes', $recipes);
   }
 
   public function ascending()
   {
     $recipes = Recipe::orderBy('title', 'asc')->get();
-    return redirect()->route('/recipes?sortOrder=title_asc')->with('recipes', $recipes);
+    return view('recipes.index')->with('recipes', $recipes);
   }
 }
