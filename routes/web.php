@@ -25,5 +25,5 @@ Route::resource('recipes', 'RecipeController');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('/recipes.index_desc', 'OrderController@descending');
-Route::post('/recipes.index', 'OrderController@ascending');
+Route::post('/recipes/desc', 'OrderController@descending');
+Route::post('/recipes', 'OrderController@ascending');

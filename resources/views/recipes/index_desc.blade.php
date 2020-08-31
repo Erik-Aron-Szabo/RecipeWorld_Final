@@ -76,28 +76,13 @@
     width: 50px;
     height: 15%;
   }
-
-  /* Summary */
-  body {
-    display: flex;
-    flex-direction: row-reverse;
-  }
-
-  #log {
-    flex-shrink: 0;
-    padding-left: 3em;
-  }
-
-  #summaries {
-    flex-grow: 1;
-  }
 </style>
 @endsection
 
 <!-- 888 -->
 
 @section('content')
-<h2>Recipes Desc</h2>
+<h2>Recipes</h2>
 <small>Here you can find the recipies to make.</small>
 <hr>
 <h5>Order By:</h5>
@@ -106,7 +91,6 @@
   <p>Title</p>
   <label class="switch">
     {{Form::checkbox('sort_order', 'asc', false)}}
-    <!-- <input id="checkbox_title" type="checkbox" value="asc" name="sort_order" false> -->
     <span class="slider round"></span>
   </label>
 </div>
@@ -148,9 +132,7 @@
 @section('script')
 <script>
   $(document).ready(function() {
-    console.log('hi');
     $("#order_form").on("change", "input:checkbox", function() {
-      console.log('hi2');
       $("#order_form").submit();
     });
   });

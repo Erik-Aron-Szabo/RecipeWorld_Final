@@ -32,13 +32,6 @@ class RecipeController extends Controller
     //$recipes3 = DB::select('SELECT * FROM recipes ORDER BY title DESC');
     return view('recipes.index')->with('recipes', $recipes);
   }
-
-  public function desc()
-  {
-    $recipes = Recipe::orderBy('title', 'desc')->get();
-    return view('recipes.index')->with('recipes', $recipes);
-  }
-
   /**
    * Show the form for creating a new resource.
    *
