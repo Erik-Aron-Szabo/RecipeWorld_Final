@@ -61,21 +61,17 @@
     border-radius: 50%;
   }
 
-  /* #a {
+  /* Erik */
+
+  .recipe-block {
     position: relative;
-    float: right;
-    width: 50px;
-    height: 15%;
-    border: 2.5px solid red;
   }
 
-  #b {
-    position: relative;
-    margin-top: 0;
-    right: auto;
-    width: 50px;
-    height: 15%;
-  } */
+  .rating {
+    position: absolute;
+    bottom: 0;
+    right: 20px;
+  }
 </style>
 @endsection
 
@@ -93,10 +89,10 @@
     {{Form::checkbox('sort_order', 'desc', true)}}
     <span class="slider round"></span>
   </label>
+  {!! Form::close() !!}
 </div>
 <br>
 <hr style="margin-top: 0;">
-{!! Form::close() !!}
 
 {{-- Ul the recipes from DB --}}
 {{-- RecipeController -> 'recipes' ==> ALL the recipes in DB --}}
@@ -110,7 +106,7 @@
       <div class="col-md-4">
         <img style="width: 100%" src="/storage/cover_images/{{$recipe->cover_image}}" alt="">
       </div>
-      <div class="col-md-8">
+      <div class="col-md-8 recipe-block">
         <h4><a href="/recipes/{{$recipe->id}}">{{$recipe->title}}</a>
           <details class="col-md-7">
             <summary>Instructions</summary><small>
@@ -118,6 +114,7 @@
             </small>
           </details>
         </h4>
+        <p class="rating"> Rating: {{$recipe->rating}}</p>
       </div>
     </div>
 

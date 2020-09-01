@@ -23,7 +23,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('recipes', 'RecipeController');
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::post('/recipes/desc', 'OrderController@descending');
 Route::post('/recipes', 'OrderController@ascending');
+
+Route::post('/recipes.show', 'RecipeController@vote');
+Route::post('/recipe/create', 'RecipeController@store');

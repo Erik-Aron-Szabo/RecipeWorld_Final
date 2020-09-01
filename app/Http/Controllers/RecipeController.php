@@ -53,7 +53,8 @@ class RecipeController extends Controller
     $this->validate($request, [
       'title' => 'required',
       'instructions' => 'required',
-      'cover_image' => 'image|nullable|max:1999'
+      'cover_image' => 'image|nullable|max:1999',
+      'rating' => 'nullable'
     ]);
 
     // handle file upload
@@ -81,6 +82,7 @@ class RecipeController extends Controller
     $recipe->instructions = $request->input('instructions');
     $recipe->user_id = auth()->user()->id;
     $recipe->cover_image = $fileNameToStore;
+    $recipe->rating = 0;
     $recipe->save();
 
     return redirect('/recipes')->with('success', 'Recipe created.');
@@ -95,7 +97,7 @@ class RecipeController extends Controller
   public function show($id)
   {
     $recipe = Recipe::find($id);
-    return view('recipes.show')->with('recipe', $recipe);
+    return view('recipes/show')->with('recipe', $recipe);
   }
 
   /**
@@ -109,10 +111,26 @@ class RecipeController extends Controller
 
     $recipe = Recipe::find($id);
 
+
+    return view('recipes/show')->with('recipe', $recipe);
+
     if (Auth::id() !== $recipe->user_id) {
       return redirect('/recipessgit')->with('error', 'Unauthorized page.');
     }
+
     return view('recipes.edit')->with('recipe', $recipe);
+  }
+
+
+  public function vote(Request $request)
+  {
+    $id = $request->input('id');
+    if (Auth::id() > 0) {
+      DB::table('recipes')->where('id', $id)->increment('rating');
+      $recipe = Recipe::find($id);
+      return view('recipes.show')->with('recipe', $recipe);
+    }
+    return redirect('/recipessgit')->with('error', 'Login in order to Like this recipe.');
   }
 
   /**
@@ -134,7 +152,7 @@ class RecipeController extends Controller
 
       $fileNameWithExt = $request->file('cover_image')->getClientOriginalName();
       $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-      $path = $request->file('cover_image')->storeAs('public/cover_images');
+      $path = $request->file('cover_image')->storeAs('public/cover_images', $filename);
     }
 
 
@@ -142,7 +160,7 @@ class RecipeController extends Controller
     $recipe->title = $request->input('title');
     $recipe->instructions = $request->input('instructions');
     if ($request->hasFile('cover_image')) {
-      $recipe->cover_image = $fileNameToStore;
+      $recipe->cover_image = $filename;
     }
     $recipe->save();
 
