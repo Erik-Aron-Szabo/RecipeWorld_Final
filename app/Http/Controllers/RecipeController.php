@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 use App\Recipe;
+use App\Rate;
+use App\User;
 use DB;
 
 class RecipeController extends Controller
@@ -25,10 +27,15 @@ class RecipeController extends Controller
 
   public function index()
   {
-    $order = array('asc', 'desc');
-    $orderDesc = 'desc';
     //$recipes = Recipe::all();
     $recipes = Recipe::orderBy('title', 'asc')->get();
+
+    // $ratings_array = array("user_id" => 0, 'recipe_id' => 0);
+    // $new_ratings_array = array();
+    // foreach ($ratings as $rating) {
+    //   $ratings_array[$rating->user_id]
+    // }
+
     //$recipes3 = DB::select('SELECT * FROM recipes ORDER BY title DESC');
     return view('recipes.index')->with('recipes', $recipes);
   }
@@ -53,8 +60,7 @@ class RecipeController extends Controller
     $this->validate($request, [
       'title' => 'required',
       'instructions' => 'required',
-      'cover_image' => 'image|nullable|max:1999',
-      'rating' => 'nullable'
+      'cover_image' => 'image|nullable|max:1999'
     ]);
 
     // handle file upload
@@ -77,6 +83,7 @@ class RecipeController extends Controller
       $fileNameToStore = 'noimage.jpeg';
     }
 
+
     $recipe = new Recipe();
     $recipe->title = $request->input('title');
     $recipe->instructions = $request->input('instructions');
@@ -84,6 +91,7 @@ class RecipeController extends Controller
     $recipe->cover_image = $fileNameToStore;
     $recipe->rating = 0;
     $recipe->save();
+
 
     return redirect('/recipes')->with('success', 'Recipe created.');
   }
@@ -124,13 +132,29 @@ class RecipeController extends Controller
 
   public function vote(Request $request)
   {
-    $id = $request->input('id');
-    if (Auth::id() > 0) {
-      DB::table('recipes')->where('id', $id)->increment('rating');
-      $recipe = Recipe::find($id);
-      return view('recipes.show')->with('recipe', $recipe);
+    if (Auth::id() == null) {
+      return redirect('/recipessgit')->with('error', 'Login in order to Like this recipe.');
     }
-    return redirect('/recipessgit')->with('error', 'Login in order to Like this recipe.');
+
+    $id = $request->input('id');
+    $recipe = Recipe::find($id);
+
+    $rate_user_id = Rate::where('recipe_id', $id)->pluck('user_id')->toArray();
+
+    if (in_array(Auth::id(), $rate_user_id)) {
+      return redirect('/recipes')->with('recipe', $recipe)->with('error', 'You already liked this recipe.');
+    }
+
+    $rate = new Rate();
+    $rate->user_id = Auth::id();
+    $rate->recipe_id = $id;
+    $rate->save();
+
+    $recipe = Recipe::find($id);
+    Recipe::where('id', $rate->recipe_id)->increment('rating', 1);
+    $recipe->save();
+
+    return redirect()->route('recipes.show', [$recipe])->with('recipe', $recipe);
   }
 
   /**

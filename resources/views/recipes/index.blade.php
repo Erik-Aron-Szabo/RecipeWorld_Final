@@ -114,7 +114,7 @@
             </small>
           </details>
         </h4>
-        <p class="rating"> Rating: {{$recipe->rating}}</p>
+        <p class="rating"> Rating: {{$recipe->rating)}</p>
       </div>
     </div>
 
