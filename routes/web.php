@@ -19,12 +19,16 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::resource('recipes', 'RecipeController');
+Route::post('/recipes.show', 'RecipeController@vote');
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('recipes', 'RecipeController');
 
 Route::post('/recipes/desc', 'OrderController@descending');
 Route::post('/recipes', 'OrderController@ascending');
 
-Route::post('/recipes.show', 'RecipeController@vote');
 Route::post('/recipe/create', 'RecipeController@store');
+Route::post('/recipes.show', 'CommentController@create');
+Route::delete('/recipe.show', 'CommentController@destroy');
+Route::put('/recipe.show', 'CommentController@update');
+Route::post('/recipe.show', 'RecipeController@vote');

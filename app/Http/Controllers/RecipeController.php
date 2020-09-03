@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 use App\Recipe;
 use App\Rate;
+use App\Comment;
 use App\User;
 use DB;
 
@@ -105,7 +106,11 @@ class RecipeController extends Controller
   public function show($id)
   {
     $recipe = Recipe::find($id);
-    return view('recipes/show')->with('recipe', $recipe);
+    $comments = Comment::all();
+    $users = User::all();
+
+
+    return view('recipes/show')->with('recipe', $recipe)->with('comments', $comments)->with('users', $users);
   }
 
   /**
