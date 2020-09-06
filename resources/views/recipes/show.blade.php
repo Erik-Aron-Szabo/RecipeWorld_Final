@@ -126,6 +126,8 @@ $recipe_id = $recipe->id;
       {{Form::submit('Comment')}}
       {!! Form::close() !!}
     </div>
+    @endif
+
     <br><br>
     @foreach ($comments as $comment)
     @if ($comment->recipe_id == $recipe->id)
@@ -163,7 +165,6 @@ $recipe_id = $recipe->id;
     @endif
     <br>
     @endforeach
-    @endif
     </>
   </div>
 

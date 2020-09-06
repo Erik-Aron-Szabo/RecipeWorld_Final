@@ -61,20 +61,16 @@
     border-radius: 50%;
   }
 
-  #a {
+  /* Erik */
+
+  .recipe-block {
     position: relative;
-    float: right;
-    width: 50px;
-    height: 15%;
-    border: 2.5px solid red;
   }
 
-  #b {
-    position: relative;
-    margin-top: 0;
-    right: auto;
-    width: 50px;
-    height: 15%;
+  .rating {
+    position: absolute;
+    bottom: 0;
+    right: 20px;
   }
 </style>
 @endsection
@@ -118,6 +114,7 @@
             </small>
           </details>
         </h4>
+        <p class="rating"> Rating: {{$recipe->rating}}</p>
       </div>
     </div>
 
